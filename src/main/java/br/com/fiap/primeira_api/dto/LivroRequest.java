@@ -1,32 +1,23 @@
-package br.com.fiap.primeira_api.model;
+package br.com.fiap.primeira_api.dto;
 
-import jakarta.persistence.*;
+import br.com.fiap.primeira_api.model.Categoria;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
 
-@Entity
-@Table(name = "TB_LIVROS")
-public class Livro {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "livro_titulo")
+public class LivroRequest {
+    @NotBlank(message = "O título do livro é obrigatório")
     private String titulo;
-    @Column(name = "livro_autor")
+    @NotBlank(message = "A autoria do livro é obrigatória")
     private String autor;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "livro_categoria")
+    @NotNull(message = "A categoria do livro é uma informação necessária")
     private Categoria categoria;
-    @Column(name = "livro_editora")
+    @Size(min = 3, max = 10, message = "O nome da editora deve ter no mínimo 3 e no máximo 10 caracteres")
+    @NotBlank(message = "O nome da editora é obrigatório")
     private String editora;
-    @Column(name = "livro_isbn")
+    @Min(value = 1000000000L, message = "O ISBN do livro deve ter no mínimo 10 caracteres")
+    // 1234567891012L
+    @Max(value = 9999999999999L, message = "O ISBN do livro deve ter no máximo 13 caracteres")
     private Long isbn;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitulo() {
         return titulo;

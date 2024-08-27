@@ -1,23 +1,11 @@
-package br.com.fiap.primeira_api.model;
+package br.com.fiap.primeira_api.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "TB_LIVROS")
-public class Livro {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class LivroResponse {
     private Long id;
-    @Column(name = "livro_titulo")
     private String titulo;
-    @Column(name = "livro_autor")
     private String autor;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "livro_categoria")
-    private Categoria categoria;
-    @Column(name = "livro_editora")
+    private String categoria;
     private String editora;
-    @Column(name = "livro_isbn")
     private Long isbn;
 
     public Long getId() {
@@ -44,11 +32,11 @@ public class Livro {
         this.autor = autor;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
