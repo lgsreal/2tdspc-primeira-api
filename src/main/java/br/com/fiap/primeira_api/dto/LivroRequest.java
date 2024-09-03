@@ -2,7 +2,6 @@ package br.com.fiap.primeira_api.dto;
 
 import br.com.fiap.primeira_api.model.Categoria;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.br.CPF;
 
 public class LivroRequest {
     @NotBlank(message = "O título do livro é obrigatório")
@@ -14,10 +13,8 @@ public class LivroRequest {
     @Size(min = 3, max = 10, message = "O nome da editora deve ter no mínimo 3 e no máximo 10 caracteres")
     @NotBlank(message = "O nome da editora é obrigatório")
     private String editora;
-    @Min(value = 1000000000L, message = "O ISBN do livro deve ter no mínimo 10 caracteres")
-    // 1234567891012L
-    @Max(value = 9999999999999L, message = "O ISBN do livro deve ter no máximo 13 caracteres")
-    private Long isbn;
+    @Pattern(regexp = "^\\d{10}$|^\\d{13}$", message = "O ISBN deve ter 10 ou 13 dígitos")
+    private String isbn;
 
     public String getTitulo() {
         return titulo;
@@ -51,11 +48,11 @@ public class LivroRequest {
         this.editora = editora;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 }

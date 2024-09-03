@@ -1,12 +1,15 @@
 package br.com.fiap.primeira_api.dto;
 
+import org.springframework.hateoas.Link;
+
 public class LivroResponse {
     private Long id;
     private String titulo;
     private String autor;
     private String categoria;
     private String editora;
-    private Long isbn;
+    private String isbn;
+    private Link link;
 
     public Long getId() {
         return id;
@@ -48,11 +51,19 @@ public class LivroResponse {
         this.editora = editora;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 }

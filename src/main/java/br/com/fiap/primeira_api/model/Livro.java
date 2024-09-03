@@ -18,7 +18,7 @@ public class Livro {
     @Column(name = "livro_editora")
     private String editora;
     @Column(name = "livro_isbn")
-    private Long isbn;
+    private String isbn;
 
     public Long getId() {
         return id;
@@ -60,11 +60,11 @@ public class Livro {
         this.editora = editora;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 }
