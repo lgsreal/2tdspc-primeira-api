@@ -5,6 +5,9 @@ import br.com.fiap.primeira_api.dto.LivroResponse;
 import br.com.fiap.primeira_api.model.Livro;
 import br.com.fiap.primeira_api.repository.LivroRepository;
 import br.com.fiap.primeira_api.service.LivroMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +27,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 // localhost:8080/livros
-@RequestMapping(value = "/livros")
+@RequestMapping(value = "/livros", produces = {"application/json"})
+@Tag(name = "api-livros")
 public class LivroController {
     @Autowired
     private LivroRepository livroRepository;
@@ -35,6 +39,9 @@ public class LivroController {
 
     // CRUD - Create, Read, Update, Delete
     // HTTP verbs - POST, GET, PUT, DELETE
+
+    @Operation(summary = "Cria um livro e grava no banco")
+    @ApiResponse(responseCode = "201", description = "Livro cadastrado com sucesso")
     @PostMapping
     public ResponseEntity<LivroResponse> createLivro(@Valid @RequestBody LivroRequest livroRequest) {
         Livro livroConvertido = livroMapper.requestToLivro(livroRequest);
@@ -43,6 +50,7 @@ public class LivroController {
         return new ResponseEntity<>(livroResponse, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Retorna todos os livros persistidos")
     @GetMapping
     public ResponseEntity<List<LivroResponse>> readLivros() {
         Page<Livro> listaLivros = livroRepository.findAll(paginacao);
@@ -63,6 +71,7 @@ public class LivroController {
         return new ResponseEntity<>(listaLivrosResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "Retorna um livro dado o seu ID")
     @GetMapping("/{id}")
     public ResponseEntity<LivroResponse> readLivro(@PathVariable Long id) {
         Optional<Livro> livroSalvo = livroRepository.findById(id);
@@ -79,6 +88,7 @@ public class LivroController {
         return new ResponseEntity<>(livroResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "Atualiza um livro já existente no banco")
     @PutMapping("/{id}")
     public ResponseEntity<LivroResponse> update(@PathVariable Long id, @Valid @RequestBody LivroRequest livroRequest) {
         Optional<Livro> livroSalvo = livroRepository.findById(id);
@@ -92,6 +102,7 @@ public class LivroController {
         return new ResponseEntity<>(livroResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "Exclui um livro do banco de dados dado um ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Optional<Livro> livroSalvo = livroRepository.findById(id);
