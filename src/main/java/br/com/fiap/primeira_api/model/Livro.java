@@ -2,6 +2,8 @@ package br.com.fiap.primeira_api.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "TB_LIVROS")
 public class Livro {
@@ -19,6 +21,8 @@ public class Livro {
     private String editora;
     @Column(name = "livro_isbn")
     private String isbn;
+    @ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
+    private List<Prateleira> prateleiras;
 
     public Long getId() {
         return id;
